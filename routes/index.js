@@ -14,15 +14,14 @@ router.post('/admin/get_all_active_users',authMiddleware.isAuthenticate,UsersCon
 router.post('/admin/get_requested_users',authMiddleware.isAuthenticate,UsersController.get_requested_users)
 
 
-router.get('/', async(req, res) => {
-    if(req.session.loggedin){
-        res.render('data_management/list',{token:req.session.token, role:req.session.role, fullname:req.session.fullname})
+// router.get('/', async(req, res) => {
+//     if(req.session.loggedin){
+//         res.render('data_management/list',{token:req.session.token, role:req.session.role, fullname:req.session.fullname})
     
-    }
-    res.render('templates/login')
+//     }
+//     res.render('templates/login')
     
-})
-
+// })
 
  
 module.exports = router;

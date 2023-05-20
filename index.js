@@ -62,8 +62,9 @@ const io = require('socket.io')(server);
 const socketController = require('./src/controllers/socket.controller');
 new socketController('connection',io)
 
-server.listen(5572, async function () {
-    console.log("listen on : "+5572);
+
+server.listen(5562, async function () {
+    console.log("listen on : "+5562);
 });
 
 // ALTER TABLE `tbl_rooms` ADD `qty` INT NOT NULL DEFAULT '1' AFTER `updated_at`;
