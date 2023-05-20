@@ -27,7 +27,7 @@ class MessageController {
                     
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Guest not found."
                     });
                 }

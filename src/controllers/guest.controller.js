@@ -25,7 +25,7 @@ class GuestsController {
                 } else {
                     await guests.create(req.body).then(async res_user =>{
                         return res.status(200).json({
-                            status: true,
+                            status: false,
                             message: "Guest added."
                         });
                     });
@@ -54,7 +54,7 @@ class GuestsController {
                     
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Guest not found."
                     });
                 }
@@ -87,7 +87,7 @@ class GuestsController {
                     
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Opps something went wrong."
                     });
                 }
@@ -115,7 +115,7 @@ class GuestsController {
                     
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Guest not found."
                     });
                 }

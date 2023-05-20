@@ -194,6 +194,54 @@ class UsersController {
             return res.status(200).json({ status: false, message: "Opps something went wrong.", data: error });
         }   
     } 
+
+    get_all_active_users = async (req, res) =>{
+        try {
+            let data=req.body;
+            await users.findAll({where: { status:1, role:"MEMBER"}}).then(async res_user => {
+                if(res_user && res_user.length>0){
+                    return res.status(200).json({
+                        status: true,
+                        message: "Users found.",
+                        data: res_user
+                    });
+                }else{
+                    return res.status(200).json({
+                        status: true,
+                        message: "Users not found."
+                    });
+                }
+                
+            });
+        } catch (error) {
+            console.log(error)
+            return res.status(200).json({ status: false, message: "Opps something went wrong.", data: error });
+        }   
+    } 
+
+    get_requested_users =   async (req, res) =>{
+        try {
+            let data=req.body;
+            await users.findAll({where: { status:0, role:"MEMBER"}}).then(async res_user => {
+                if(res_user && res_user.length>0){
+                    return res.status(200).json({
+                        status: true,
+                        message: "Users found.",
+                        data: res_user
+                    });
+                }else{
+                    return res.status(200).json({
+                        status: true,
+                        message: "Users not found."
+                    });
+                }
+                
+            });
+        } catch (error) {
+            console.log(error)
+            return res.status(200).json({ status: false, message: "Opps something went wrong.", data: error });
+        }   
+    } 
 }
 
 

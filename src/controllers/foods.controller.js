@@ -28,7 +28,7 @@ class CategoryController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Category not found."
                     });
                 }
@@ -52,7 +52,7 @@ class CategoryController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Items not found."
                     });
                 }
@@ -76,7 +76,7 @@ class CategoryController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Items not found."
                     });
                 }
@@ -189,7 +189,7 @@ class CategoryController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Items not found."
                     });
                 }
@@ -220,7 +220,7 @@ class CategoryController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Orders not found."
                     });
                 }

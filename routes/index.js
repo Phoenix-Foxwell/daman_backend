@@ -10,7 +10,8 @@ router.post('/admin/register_user',UsersController.register_user)
 router.post('/admin/get_wallet_amount',authMiddleware.isAuthenticate,UsersController.get_wallet_amount)
 router.post('/admin/update_wallet_amount',authMiddleware.isAuthenticate,UsersController.update_wallet_amount)
 router.post('/admin/get_wallet_history',authMiddleware.isAuthenticate,UsersController.get_wallet_history)
-
+router.post('/admin/get_all_active_users',authMiddleware.isAuthenticate,UsersController.get_all_active_users)
+router.post('/admin/get_requested_users',authMiddleware.isAuthenticate,UsersController.get_requested_users)
 
 
 router.get('/', async(req, res) => {

@@ -27,7 +27,7 @@ class RoomsController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Rooms not found."
                     });
                 }
@@ -42,42 +42,40 @@ class RoomsController {
         try {
             let data = req.body;
             let user_data= await users.findOne({where: {id:data.user_id}})
-            await room_reservation.findOne({
-                where: { room_id: data.room_id,
-                    [Op.or]: [{
-                        from_date: {
-                          [Op.between]: [data.from_date, data.to_date]
-                        },
-                        to_date: {
-                            [Op.between]: [data.from_date, data.to_date]
-                          }
-                      }]}
-            }).then(async resp => {
+            await db.sequelize.query(`SELECT count(id) as total FROM tbl_room_reservations where room_id=1 and (from_date in ('${data.from_date}','${data.to_date}') or to_date in ('${data.from_date}','${data.to_date}'))`, { type: db.sequelize.QueryTypes.SELECT })
+            .then(async resp => {
+                
                 if (resp) {
-                    return res.status(200).json({
-                        status: true,
-                        message: "Not available."
-                    });
-
-                } else {
-                    if(user_data.dataValues.walletbalance >= data.price){
-                        await room_reservation.create(req.body).then(async resps => {
-                            await users.update({ walletbalance: user_data.dataValues.walletbalance - data.price }, { where: { id: user_data.id }, limit: 1 })
-                            await wallet_trans.create({
-                                user_id: user_data.dataValues.id,
-                                amount: data.price,
-                                credit_debit: 2,
-                                machine_id: 2
-                            })
-                            return res.status(200).json({
-                                status: true,
-                                message: "Room booked."
-                            });
+                    let rommsqty= await rooms.findOne({where:{id:data.room_id}});
+                    if(resp[0].total>=rommsqty.dataValues.qty){
+                        return res.status(200).json({
+                            status: false,
+                            message: "Not available."
                         });
                     }else{
-                        return res.status(200).json({ status: false, message: "Please Recharge your wallet." });
+                        if(user_data.dataValues.walletbalance >= data.price){
+                            await room_reservation.create(req.body).then(async resps => {
+                                await users.update({ walletbalance: user_data.dataValues.walletbalance - data.price }, { where: { id: user_data.id }, limit: 1 })
+                                await wallet_trans.create({
+                                    user_id: user_data.dataValues.id,
+                                    amount: data.price,
+                                    credit_debit: 2,
+                                    machine_id: 2
+                                })
+                                return res.status(200).json({
+                                    status: true,
+                                    message: "Room booked."
+                                });
+                            });
+                        }else{
+                            return res.status(200).json({ status: false, message: "Please Recharge your wallet." });
+                        }
                     }
-                    
+                } else {
+                    return res.status(200).json({
+                        status: false,
+                        message: "Not available."
+                    });
                 }
             });
         } catch (error) {
@@ -101,7 +99,7 @@ class RoomsController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Rooms not available."
                     });
                 }

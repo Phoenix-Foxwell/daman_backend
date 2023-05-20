@@ -66,3 +66,4 @@ server.listen(5572, async function () {
     console.log("listen on : "+5572);
 });
 
+// ALTER TABLE `tbl_rooms` ADD `qty` INT NOT NULL DEFAULT '1' AFTER `updated_at`;

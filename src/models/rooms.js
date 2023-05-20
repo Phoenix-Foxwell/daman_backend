@@ -50,6 +50,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             defaultValue: true
         },
+        qty:{
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 1
+        },
         created_at: {
             type: 'TIMESTAMP',
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
