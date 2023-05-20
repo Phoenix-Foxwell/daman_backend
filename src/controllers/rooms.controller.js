@@ -42,9 +42,10 @@ class RoomsController {
         try {
             let data = req.body;
             let user_data= await users.findOne({where: {id:data.user_id}})
-            await db.sequelize.query(`SELECT count(id) as total FROM tbl_room_reservations where room_id=1 and (from_date in ('${data.from_date}','${data.to_date}') or to_date in ('${data.from_date}','${data.to_date}'))`, { type: db.sequelize.QueryTypes.SELECT })
+            await db.sequelize.query(`SELECT count(id) as total FROM tbl_room_reservations where room_id=1 and (from_date in ('${data.from_date}','${data.to_date}'))`, { type: db.sequelize.QueryTypes.SELECT })
             .then(async resp => {
-                
+                console.log("res",resp[0]
+                );
                 if (resp) {
                     let rommsqty= await rooms.findOne({where:{id:data.room_id}});
                     if(resp[0].total>=rommsqty.dataValues.qty){
