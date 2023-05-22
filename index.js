@@ -37,7 +37,6 @@ app.use(session({secret: config.secret, resave: false,
     rolling: true,}));
 
 app.use(function(req, res, next) {
-    res.setHeader("origin", "*");
     res.setHeader("methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
     res.setHeader("preflightContinue", false);
     res.setHeader("optionsSuccessStatus", 204);
