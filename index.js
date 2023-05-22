@@ -41,6 +41,7 @@ app.use(function(req, res, next) {
     res.setHeader("methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
     res.setHeader("preflightContinue", false);
     res.setHeader("optionsSuccessStatus", 204);
+    res.setHeader("Access-Control-Allow=Origin","http://thedamanclub.s3-website.ap-south-1.amazonaws.com")
     next();
 });
 
