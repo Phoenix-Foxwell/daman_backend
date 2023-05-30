@@ -28,6 +28,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             default: Sequelize.literal('GETDATE')
         },
+        quantity:{
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            defaultValue: 1
+        },
         created_at: {
             type: 'TIMESTAMP',
             defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

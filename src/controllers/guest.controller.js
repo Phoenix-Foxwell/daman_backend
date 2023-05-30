@@ -3,6 +3,7 @@ const config = require('../../config/config');
 const db = require("../models");
 const jwt = require('jsonwebtoken');
 const Op = db.Sequelize.Op;
+var moment = require('moment');
 
 //TABLES DECLARATION
 const guests = db.guests;
@@ -39,13 +40,11 @@ class GuestsController {
 
     get_guest_list = async (req, res) =>{
         try {
+            let visitdate=req.body.visitdate?req.body.visitdate:moment().format("YYYY-MM-DD");
             await guests.findAll({
-                where: { user_id: req.body.user_id, visitdate:{
-                    [Op.lt]: new Date(),
-                    [Op.gt]: new Date(new Date() - 24 * 60 * 60 * 1000)
-                  }}
+                where: { user_id: req.body.user_id, visitdate:visitdate}
             }).then(async res_user => {
-                if (res_user) {
+                if (res_user && res_user.length>0) {
                     return res.status(200).json({
                             status: true,
                             message: "Guests found.",

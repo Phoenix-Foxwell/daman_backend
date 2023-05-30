@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const users = db.users;
 const membership_transaction = db.membership_transaction;
 const wallet_trans = db.wallet_trans;
+const machines= db.machines;
 
 //USER CONTROLLER
 class UsersController {
@@ -174,12 +175,19 @@ class UsersController {
     get_wallet_history = async (req, res) =>{
         try {
             let data=req.body;
-            await wallet_trans.findAll({user_id: data.user_id}).then(async res_user => {
+            await wallet_trans.findAll({where:{user_id: data.user_id}}).then(async res_user => {
                 if(res_user && res_user.length>0){
+                    let wallet_list=[];
+                    for (let i = 0; i < res_user.length; i++) {
+                        const element = res_user[i].dataValues;
+                        let machine_list= await machines.findOne({where:{id:element.machine_id}})
+                        element.machine_name =  machine_list.dataValues.machine_name;
+                        wallet_list.push(element)
+                    }
                     return res.status(200).json({
                         status: true,
                         message: "Wallet transaction found.",
-                        data: res_user
+                        data: wallet_list
                     });
                 }else{
                     return res.status(200).json({
