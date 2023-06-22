@@ -104,7 +104,7 @@ class UsersController {
                             await membership_transaction.create(member_tra_obj).then(tran_res =>{
                                 if(tran_res){
                                     return res.status(200).json({
-                                        status: true,
+                                        status: false,
                                         message: "Register with that number."
                                     });
                                 }else{
@@ -138,7 +138,7 @@ class UsersController {
 
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Items not found."
                     });
                 }
@@ -191,7 +191,7 @@ class UsersController {
                     });
                 }else{
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Wallet transaction not found."
                     });
                 }
@@ -215,7 +215,7 @@ class UsersController {
                     });
                 }else{
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Users not found."
                     });
                 }
@@ -239,7 +239,7 @@ class UsersController {
                     });
                 }else{
                     return res.status(200).json({
-                        status: true,
+                        status: false,
                         message: "Users not found."
                     });
                 }
