@@ -152,20 +152,29 @@ class UsersController {
     update_wallet_amount = async (req, res) => {
         try {
             let data=req.body;
-            await users.update({ walletbalance: data.walletbalance }, { where: { id: data.user_id }, limit: 1 }).then(async resp => {
-                if (resp) {
-                    return res.status(200).json({
-                        status: true,
-                        message: "Wallet updated."
-                    });
 
-                } else {
-                    return res.status(200).json({
-                        status: false,
-                        message: "Opps something went wrong."
+            await users.findOne({
+                where: { id: req.body.user_id }
+            }).then(async res_user => {
+                if (res_user) {
+                    await users.update({ walletbalance:(res_user.dataValues.walletbalance)+ data.walletbalance }, { where: { id: data.user_id }, limit: 1 }).then(async resp => {
+                        if (resp) {
+                            return res.status(200).json({
+                                status: true,
+                                message: "Wallet updated."
+                            });
+        
+                        } else {
+                            return res.status(200).json({
+                                status: false,
+                                message: "Opps something went wrong."
+                            });
+                        }
                     });
                 }
-            });
+            })
+            
+            
         } catch (error) {
             console.log(error)
             return res.status(200).json({ status: false, message: "Opps something went wrong.", data: error });

@@ -63,6 +63,30 @@ class CategoryController {
         }
     }
 
+    get_all_items = async (req, res) => {
+        try {
+            let data = req.body;
+            await items.findAll({ where: { "category_id": data.category_id } }).then(async resp => {
+                if (resp.length > 0) {
+                    return res.status(200).json({
+                        status: true,
+                        message: "Items found.",
+                        data: resp
+                    });
+
+                } else {
+                    return res.status(200).json({
+                        status: false,
+                        message: "Items not found."
+                    });
+                }
+            });
+        } catch (error) {
+            console.log(error)
+            return res.status(200).json({ status: false, message: "Opps something went wrong.", data: error });
+        }
+    }
+
     update_item_status = async (req, res) => {
         try {
             let data = req.body;
