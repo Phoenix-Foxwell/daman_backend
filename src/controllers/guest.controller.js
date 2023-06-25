@@ -54,7 +54,8 @@ class GuestsController {
                 } else {
                     return res.status(200).json({
                         status: false,
-                        message: "Guest not found."
+                        message: "Guest not found.",
+                        data: []
                     });
                 }
             });
@@ -115,7 +116,8 @@ class GuestsController {
                 } else {
                     return res.status(200).json({
                         status: false,
-                        message: "Guest not found."
+                        message: "Guest not found.",
+                        data: []
                     });
                 }
             });
