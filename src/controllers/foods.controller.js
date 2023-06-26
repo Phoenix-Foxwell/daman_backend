@@ -203,7 +203,19 @@ class CategoryController {
             await food_order.findOne({ where: { "user_id": data.user_id, status: 1 } }).then(async resp => {
                 if (resp) {
                     let items_array = await order_items.findAll({ where: { "food_order_id": resp.dataValues.id } })
+                    console.log("items_array",items_array.length);
+                
                     let res_data = resp.dataValues;
+                    if(items_array.length>0){
+                        for (let i = 0; i < items_array.length; i++) {
+                            const element = items_array[i];
+                            let item= await items.findOne({where:{id:element.item_id}});
+                            items_array[i].dataValues.item_name=item.dataValues.item_name;
+                            items_array[i].dataValues.description=item.dataValues.description;
+                            items_array[i].dataValues.veg_nonveg=item.dataValues.veg_nonveg;
+                            items_array[i].dataValues.category_id=item.dataValues.category_id;
+                        }
+                    }
                     res_data.items = items_array
                     return res.status(200).json({
                         status: true,
