@@ -244,7 +244,7 @@ class CategoryController {
                 if (resp.length > 0) {
                     for (let i = 0; i < resp.length; i++) {
                         const element = resp[i].dataValues;
-                        let items_array = await order_items.findAll({ where: { "food_order_id": element.dataValues.id } })
+                        let items_array = await order_items.findAll({ where: { "food_order_id": element.id } })
                         if(items_array.length>0){
                             for (let i = 0; i < items_array.length; i++) {
                                 const element = items_array[i];
@@ -255,8 +255,8 @@ class CategoryController {
                                 items_array[i].dataValues.category_id=item.dataValues.category_id;
                             }
                         }
-                        element.dataValues.items = items_array
-                        res_data.push(element.dataValues);
+                        element.items = items_array
+                        res_data.push(element);
                     }
                     return res.status(200).json({
                         status: true,
