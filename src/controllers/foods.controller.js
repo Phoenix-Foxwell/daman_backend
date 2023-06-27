@@ -243,9 +243,19 @@ class CategoryController {
                 let res_data = [];
                 if (resp.length > 0) {
                     for (let i = 0; i < resp.length; i++) {
-                        const element = resp[i];
+                        const element = resp[i].dataValues;
                         let items_array = await order_items.findAll({ where: { "food_order_id": element.dataValues.id } })
-                        element.items = items_array
+                        if(items_array.length>0){
+                            for (let i = 0; i < items_array.length; i++) {
+                                const element = items_array[i];
+                                let item= await items.findOne({where:{id:element.item_id}});
+                                items_array[i].dataValues.item_name=item.dataValues.item_name;
+                                items_array[i].dataValues.description=item.dataValues.description;
+                                items_array[i].dataValues.veg_nonveg=item.dataValues.veg_nonveg;
+                                items_array[i].dataValues.category_id=item.dataValues.category_id;
+                            }
+                        }
+                        element.dataValues.items = items_array
                         res_data.push(element.dataValues);
                     }
                     return res.status(200).json({
